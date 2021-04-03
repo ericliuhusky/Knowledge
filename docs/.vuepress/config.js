@@ -12,7 +12,8 @@ module.exports = {
       '/iOS/': [
         '',
         'Data-structure',
-        'Algorithm'
+        'Algorithm',
+        'Foundation'
       ],
       '/Web/': [
         '',

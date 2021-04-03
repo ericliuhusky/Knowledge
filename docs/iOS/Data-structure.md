@@ -36,7 +36,7 @@
 
     具有多个前驱和多个后继的“多对多”关系的图形结构
 
-## 3.表、堆、栈和队列
+## 3. 表、堆、栈和队列
 
 - ### 表
 
@@ -54,23 +54,23 @@
 
     队列是只允许在队尾插入，在队首删除的特殊线性表，队列又根据不同的物理实现方式分为：顺序队列、链式队列。具有“先进先出”的特性
 
-## 4.二叉树的深度
+## 4. 二叉树的深度
 
 当前结点的深度为左右子树深度较大的值+1
 
 ```swift
-class BinaryTreeNode {
-    var data: Int?
+class BinaryTreeNode<T> {
+    var data: T
     var left: BinaryTreeNode?
     var right: BinaryTreeNode?
-    init(_ data: Int, _ left: BinaryTreeNode? = nil, _ right: BinaryTreeNode? = nil) {
+    init(_ data: T, _ left: BinaryTreeNode? = nil, _ right: BinaryTreeNode? = nil) {
         self.data = data
         self.left = left
         self.right = right
     }
 }
 
-func depth(_ node: BinaryTreeNode?) -> Int {
+func depth<T>(_ node: BinaryTreeNode<T>?) -> Int {
     guard let node = node else { return 0 }
 
     let left = depth(node.left) + 1
@@ -78,4 +78,5 @@ func depth(_ node: BinaryTreeNode?) -> Int {
 
     return left > right ? left : right
 }
+
 ```
