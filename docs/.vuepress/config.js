@@ -13,7 +13,12 @@ module.exports = {
         '',
         'Data-structure',
         'Algorithm',
-        'Foundation'
+        'Foundation',
+        'UIKit',
+        'WebKit',
+        'Memory-management',
+        'Network',
+        'Data-storage'
       ],
       '/Web/': [
         '',
