@@ -22,7 +22,12 @@ module.exports = {
       ],
       '/Web/': [
         '',
-        'Taro'
+        'CSS',
+        'HTML',
+        'JavaScript',
+        'React',
+        'Taro',
+        'Vue'
       ]
     }
   }
