@@ -1,4 +1,5 @@
 module.exports = {
+  base: 'Knowledge',
   title: 'EricLiu\'s Blog',
 
   themeConfig: {
