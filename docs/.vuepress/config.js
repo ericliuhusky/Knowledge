@@ -1,5 +1,5 @@
 module.exports = {
-  base: 'Knowledge',
+  base: '/Knowledge/',
   title: 'EricLiu\'s Blog',
 
   themeConfig: {
