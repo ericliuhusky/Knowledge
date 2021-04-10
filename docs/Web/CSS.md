@@ -4,10 +4,61 @@
 
 ## 2. @imoprt 引入CSS
 
-## 3. 可替换元素(replaced element)
+## 3. 元素居中
 
-展现效果不由CSS控制，渲染独立于CSS的元素，可理解为标签只为占位，渲染由其它替换；
-有`<iframe>, <video>, <embed>, <img>, <input>`
+- ### 水平居中
+
+行内元素居中
+
+```css
+.parent {
+    text-align: center;
+}
+```
+
+块级元素居中
+
+```css
+.child {
+    margin: auto
+}
+```
+
+- ### 水平垂直居中
+
+```css
+.parent {
+    position: relative;
+}
+.child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+```
+
+```css
+.parent {
+    position: relative;
+}
+.child {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+```
+
+```css
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+```
 
 ## 4. margin,padding对block和inline元素的不同影响
 
@@ -69,3 +120,11 @@ screen指的是浏览器窗口的大小，而不是物理设备屏幕的大小
 ## 16. 为获得统一的页面效果，给不同浏览器不同的版本写不同样式就叫做CSS hack
 
 ## 17. 高效CSS选择，组合选择器是从右到左解析的，效率: #id > .class > tag
+
+## 18. 选择器优先级: #id > .class > tag
+
+## 19. float浮动
+
+向左或向右浮动，直到边缘触碰到父元素的边框或者触碰到另一个浮动元素的边框
+
+## 20. 行内元素设置width和height无效

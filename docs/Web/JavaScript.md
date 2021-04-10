@@ -96,3 +96,40 @@ function f2(x, y, z) {
 }
 f2.call(this, 1, 2, 3)
 ```
+
+## 10. async, await 和 Promise
+
+```javascript
+function callback({ data, success, fail }) {
+    setTimeout(() => {
+        if (data.flag) {
+            success('success')
+        } else {
+            fail('error')
+        }
+    }, 1000)
+}
+
+async function asyncPromise(data) {
+    return await new Promise((resolve, reject) => {
+        callback({
+            data: {
+                flag: data.flag
+            },
+            success: res => {
+                resolve(res)
+            },
+            fail: err => {
+                reject(err)
+            }
+        })
+    })
+}
+
+(async () => {
+    let res = await asyncPromise({
+        flag: true
+    })
+    console.log(res)
+})()
+```

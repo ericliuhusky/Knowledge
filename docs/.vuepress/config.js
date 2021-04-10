@@ -27,7 +27,9 @@ module.exports = {
         'JavaScript',
         'React',
         'Taro',
-        'Vue'
+        'Vue',
+        'http',
+        'Performance-optimization'
       ]
     }
   }

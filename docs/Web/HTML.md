@@ -32,3 +32,8 @@
 - ### inline-block
 
 `<img>, <input>`
+
+## 10. 可替换元素(replaced element)
+
+展现效果不由CSS控制，渲染独立于CSS的元素，可理解为标签只为占位，渲染由其它替换；
+有`<iframe>, <video>, <embed>, <img>, <input>`
