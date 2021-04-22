@@ -14,12 +14,16 @@ module.exports = {
         '',
         'Data-structure',
         'Algorithm',
+        'Swift',
+        'String',
         'Foundation',
         'UIKit',
         'WebKit',
         'Memory-management',
         'Network',
-        'Data-storage'
+        'Data-storage',
+        'Multi-thread',
+        'Design-patterns'
       ],
       '/Web/': [
         '',
