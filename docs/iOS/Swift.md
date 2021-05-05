@@ -329,3 +329,32 @@ print(test.addOne) // 1
 test.addOne = 1
 print(test.addOne) // 2
 ```
+
+## 18. keyPath
+
+```swift
+struct A {
+    struct B {
+        struct C {
+            let value: String = "c"
+        }
+        let value: C = C()
+    }
+    let value: B = B()
+    var c: String {
+        get {
+            self[keyPath: \.value.value.value]
+        }
+    }
+    func keyPath(_ keyPath: KeyPath<A, String>) -> String {
+        return self[keyPath: keyPath]
+    }
+}
+
+let a = A()
+a.value.value.value
+let keyPath = \A.value.value.value
+a[keyPath: keyPath]
+a.keyPath(\.value.value.value)
+a.c
+```
