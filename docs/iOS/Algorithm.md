@@ -216,3 +216,183 @@ func hashCount<T: Sequence>(_ sequence: T) -> T.Element? where T.Element: Hashab
     return nil
 }
 ```
+
+## 8. 用有序字典实现 LRU缓存
+
+```swift
+// 双向链表结点
+class DoubleLinkedNode<Data> {
+    var data: Data?
+    var prev: DoubleLinkedNode?
+    var next: DoubleLinkedNode?
+
+    init(_ data: Data? = nil) {
+        self.data = data
+        self.prev = nil
+        self.next = nil
+    }
+}
+
+// 双向链表
+// tips: 双向链表的优点主要在于删除快，不需要遍历一遍找到待删除结点的前一个结点
+class DoubleLinkedList<Data> {
+    // 虚拟头尾结点
+    var head: DoubleLinkedNode<Data>
+    var tail: DoubleLinkedNode<Data>
+
+    // 链表结点个数
+    var count: Int
+
+    init() {
+        self.head = DoubleLinkedNode()
+        self.tail = DoubleLinkedNode()
+
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+        self.count = 0
+    }
+
+    // 在虚拟头结点之后插入新结点，即在链表的第一个位置插入结点
+    func insertFirst(_ newNode: DoubleLinkedNode<Data>) {
+        self.insert(newNode, after: self.head)
+    }
+
+    // 删除虚拟尾结点的前一个结点，即删除链表最后一个位置的结点，并返回结点的引用
+    func removeLast() -> DoubleLinkedNode<Data>? {
+        guard let last = tail.prev else { return nil }
+        self.remove(last)
+        return last
+    }
+
+    // 把某个结点移动到链表的第一个位置
+    func moveToFirst(_ node: DoubleLinkedNode<Data>) {
+        // 先删掉它，再在第一个位置插入
+        self.remove(node)
+        self.insertFirst(node)
+    }
+
+    // 在某个结点之后插入新的结点
+    func insert(_ newNode: DoubleLinkedNode<Data>, after prevNode: DoubleLinkedNode<Data>) {
+        guard let nextNode = prevNode.next else { return }
+
+        // 新结点的前指针指向新结点前面的结点，新结点后面的结点的前指针指向新结点
+        newNode.prev = prevNode
+        nextNode.prev = newNode
+
+        // 新结点的后指针指向新结点后面的结点，新结点前面的结点的后指针指向新结点
+        newNode.next = nextNode
+        prevNode.next = newNode
+
+        // 插入计数 + 1
+        self.count += 1
+    }
+
+    // 删除结点
+    func remove(_ node: DoubleLinkedNode<Data>) {
+        guard let prevNode = node.prev, let nextNode = node.next else { return }
+
+        // 待删除结点的后一个结点的前指针指向待删除结点的前一个结点，待删除结点的前一个结点的后指针指向待删除结点的后一个结点
+        nextNode.prev = node.prev
+        prevNode.next = node.next
+
+        // 删除计数 - 1
+        self.count -= 1
+    }
+}
+
+// 键值对
+struct KeyValue<Key, Value> {
+    var key: Key
+    var value: Value
+}
+
+// 双向链表 + 哈希表
+// 用哈希字典存储链表的结点引用，可以根据 key 键找到哈希字典中的链表结点引用进而找到链表中存储的 value 值
+// 本来哈希字典是没有顺序的，与链表结合可以创造有序字典
+class LinkedHashList<Key: Hashable, Value>: DoubleLinkedList<KeyValue<Key, Value>> {
+    // 哈希字典 [键: 结点引用]
+    var dict: [Key: DoubleLinkedNode<KeyValue<Key, Value>>]
+
+    override init() {
+        self.dict = Dictionary()
+        super.init()
+    }
+
+    subscript(key: Key) -> Value? {
+        // key -> node -> value
+        get {
+            guard let node = self.dict[key] else { return nil }
+            guard let data = node.data else { return nil }
+            return data.value
+        }
+
+        set {
+            // newValue 不为 nil 时
+            if let newValue = newValue {
+                // 已经有键时，修改链表结点的值
+                if let node = self.dict[key] {
+                    node.data?.value = newValue
+                }
+                // 没有键时，新建结点，设置哈希字典键对应的结点索引，并把结点插入到链表的第一个位置
+                else {
+                    let newNode = DoubleLinkedNode<KeyValue<Key, Value>>(KeyValue(key: key, value: newValue))
+                    self.dict[key] = newNode
+                    self.insertFirst(newNode)
+                }
+            }
+            // newValue 为 nil 时，删除哈希字典索引，并删除链表中的结点 
+            else {
+                guard let node = self.dict[key] else { return }
+                self.dict[key] = nil
+                self.remove(node)
+            }
+        }
+    }
+ 
+    // 根据关键字，把某个结点移动到链表的第一个位置
+    func moveToFirst(key: Key) {
+        guard let node = self.dict[key] else { return }
+        self.moveToFirst(node)
+    }
+
+    // 删除链表最后一个位置的结点，并把删除哈希字典索引
+    func removeLast() { 
+        guard let removedNode = super.removeLast() else { return }
+        guard let data = removedNode.data else { return }
+        self.dict[data.key] = nil
+    }
+}
+
+// Least Recently Used，最少使用缓存算法
+// 设置缓存最大容量，当缓存到达最大容量时，删除最少使用的缓存
+class LRUCache<Key: Hashable, Value>: LinkedHashList<Key, Value> {
+    // 容量
+    var capacity: Int
+
+    init(_ capacity: Int) {
+        self.capacity = capacity
+    }
+
+    // 获取缓存
+    func get(key: Key) -> Value? {
+        // 使用过移动到最前
+        self.moveToFirst(key: key)
+        return self[key]
+    }
+
+    // 设置缓存
+    func set(key: Key, value: Value) {
+        // 使用过移动到最前，如果新建结点，默认插入到最前所以不需要移动到最前
+        if let _ = self[key] {
+            self.moveToFirst(key: key)
+        }
+        self[key] = value
+
+        // 超出最大容量时，删除最后面的使用最少的缓存
+        if self.count > self.capacity {
+            self.removeLast()
+        }
+    }
+}
+```
