@@ -201,3 +201,55 @@ class GiftBox: Decorator {
 
 GiftBox(ToyCar()).surprise()
 ```
+
+## 6. 迭代器模式
+
+```swift
+protocol _Sequence {
+    associatedtype Element
+    associatedtype Iterator
+
+    func makeIterator() -> Self.Iterator
+}
+
+protocol _IteratorProtocal {
+    associatedtype Element
+
+    mutating func next() -> Self.Element?
+}
+
+struct _Array<Element>: _Sequence {
+    typealias Element = Element
+    typealias Iterator = _Iterator<Self>
+
+    let value: [Element]
+
+    func makeIterator() -> Self.Iterator {
+        return _Iterator<Self>(value: value)
+    }
+}
+
+
+struct _Iterator<Elements>: _IteratorProtocal where Elements: _Sequence {
+    typealias Element = Elements.Element
+
+    let value: [Element]
+    var index: Int = 0
+
+    mutating func next() -> Elements.Element? {
+        guard index < value.count else { return nil }
+        defer {
+            index += 1
+        }
+        return value[index]
+    }
+}
+
+
+
+var iter = _Array<Int>(value: [1, 2, 3, 4, 5]).makeIterator()
+//var iter = _Array<String>(value: ["a","b","c","d","e"]).makeIterator()
+while let item = iter.next() {
+    print(item)
+}
+```
