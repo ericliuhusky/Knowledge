@@ -6,6 +6,7 @@ module.exports = {
     nav: [
       { text: 'iOS', link: '/iOS/' },
       { text: 'Web', link: '/Web/' },
+      { text: 'Tools', link: '/Tools/' },
       { text: 'GitHub', link: 'https://github.com/ericliuhusky' },
     ],
 
@@ -35,6 +36,10 @@ module.exports = {
         'Vue',
         'http',
         'Performance-optimization'
+      ],
+      '/Tools/': [
+        '',
+        'DocC'
       ]
     }
   }
