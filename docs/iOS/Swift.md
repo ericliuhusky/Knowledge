@@ -358,3 +358,42 @@ a[keyPath: keyPath]
 a.keyPath(\.value.value.value)
 a.c
 ```
+
+## 19. 元素为值类型和引用类型的数组更改的区别
+
+```swift
+// 元素为值类型的数组只可以使用index更改数组
+
+struct Value {
+    var property = 0
+}
+
+var valueArray: [Value] = .init(repeating: .init(), count: 3)
+
+for index in 0..<valueArray.count {
+    valueArray[index].property += 1
+}
+
+dump(valueArray)
+```
+
+```swift
+// 元素为引用类型的数组既可以使用index更改数组，又可以使用for-in循环更改数组
+class Reference {
+    var property = 0
+}
+
+// 引用类型元素不可以使用Array(repeating:count:)来循环创建数组，否则创建出来的数组都是同一个引用
+//var referenceArray: [Reference] = .init(repeating: .init(), count: 3)
+var referenceArray: [Reference] = .init(AnyIterator(Reference.init).prefix(3))
+
+for reference in referenceArray {
+    reference.property += 1
+}
+
+for index in 0..<referenceArray.count {
+    referenceArray[index].property += 1
+}
+
+dump(referenceArray)
+```
