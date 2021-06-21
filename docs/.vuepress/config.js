@@ -4,6 +4,7 @@ module.exports = {
 
   themeConfig: {
     nav: [
+      { text: 'CS', link: '/CS/'},
       { text: 'iOS', link: '/iOS/' },
       { text: 'Web', link: '/Web/' },
       { text: 'Tools', link: '/Tools/' },
@@ -11,6 +12,10 @@ module.exports = {
     ],
 
     sidebar: {
+      '/CS/': [
+        '',
+        'AsynchronyProgramming',
+      ],
       '/iOS/': [
         '',
         'Data-structure',
