@@ -29,7 +29,8 @@ module.exports = {
         'Network',
         'Data-storage',
         'Multi-thread',
-        'Design-patterns'
+        'Design-patterns',
+        'Concurrency'
       ],
       '/Web/': [
         '',
