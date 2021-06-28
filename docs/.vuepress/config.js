@@ -7,6 +7,7 @@ module.exports = {
       { text: 'CS', link: '/CS/'},
       { text: 'iOS', link: '/iOS/' },
       { text: 'Web', link: '/Web/' },
+      { text: 'Books', link: '/Books/' },
       { text: 'Tools', link: '/Tools/' },
       { text: 'GitHub', link: 'https://github.com/ericliuhusky' },
     ],
@@ -42,6 +43,10 @@ module.exports = {
         'Vue',
         'http',
         'Performance-optimization'
+      ],
+      '/Books/': [
+        '',
+        'Swifter-SwiftTips'
       ],
       '/Tools/': [
         '',
