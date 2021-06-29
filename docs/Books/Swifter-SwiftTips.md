@@ -764,3 +764,41 @@ assert(1 == 1)
 ```swift
 fatalError()
 ```
+
+## 44. 指针操作
+
+```swift
+//#include "stdio.h"
+//
+//int main() {
+//    int a[] = {0, 1, 2};
+//    int *p = a;
+//    *(p+2) = 3;
+//    for(int i; i < 3; i ++) {
+//        printf("%d\n", a[i]);
+//    }
+//    // 0 \n 1 \n 3 \n
+//    return 0;
+//}
+
+var array = [0, 1, 2]
+let pointer = UnsafeMutableBufferPointer<Int>(start: &array, count: array.count).baseAddress
+pointer?.advanced(by: 2).pointee = 3
+print(array) // [0, 1, 3]
+```
+
+## 45. 条件协议扩展
+
+```swift
+protocol NumberProtocol {
+    
+}
+
+extension Int: NumberProtocol {}
+
+extension NumberProtocol where Self == Int {
+    func int() {
+        print("只有Int类型才可以有此方法")
+    }
+}
+```
