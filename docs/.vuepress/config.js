@@ -50,6 +50,8 @@ module.exports = {
       ],
       '/Tools/': [
         '',
+        'SwiftToolChain',
+        'Git',
         'DocC'
       ]
     }
