@@ -52,68 +52,62 @@ B()
 
 ## 3. 观察者模式
 
+[观察者模式](../CS/DesignPatterns.md#_1-观察者模式)
+
+Key-Value Observing
+
 ```swift
-//  可观察对象
-class Subject {
-    var state = 0
-    
-    //  观察者
-    private var observers = [Observer]()
-    
-    //  添加
-    func appendObserver(_ observer: Observer) {
-        observers.append(observer)
-    }
-    
-    //  删除
-    func removeObserver(_ observer: Observer) {
-        if let index = observers.firstIndex(where: { $0 === observer} ) {
-            observers.remove(at: index)
-        }
-    }
-    
-    //  通知观察者更新
-    func notify() {
-        observers.forEach { (observer) in
-            observer.update(subject: self)
-        }
-    }
+import Foundation
+
+class Subject: NSObject {
+    @objc dynamic var state = 0
 }
 
-//  观察者协议
-//  class仅类协议，才可以判断实例对象===地址相等
-protocol Observer: class {
-    func update(subject: Subject)
-}
-
-//  观察者A
-class ObserverA: Observer {
-    func update(subject: Subject) {
-        print("observerA", subject.state)
-    }
-}
-
-//  观察者B
-class ObserverB: Observer {
-    func update(subject: Subject) {
-        print("observerB", subject.state)
+class Observer: NSObject {
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        print(change?[.newKey] as Any)
     }
 }
 
 let subject = Subject()
-let observerA = ObserverA()
-let observerB = ObserverB()
-
-subject.appendObserver(observerA)
-subject.appendObserver(observerB)
-
+let observer = Observer()
+subject.addObserver(observer, forKeyPath: "state", options: .new, context: nil)
 subject.state = 1
-subject.notify()
+// print: Optional(1)
+```
 
-subject.removeObserver(observerA)
-subject.state = 2
-subject.notify()
+Notification
+```swift
+import Foundation
 
+let name = Notification.Name.init("event")
+class ObjectA {}
+class ObjectB {}
+
+let objectA = ObjectA()
+let objectB = ObjectB()
+
+// NotificationCenter实际上是观察者模式中的被观察对象
+let center = NotificationCenter.default
+
+center.addObserver(forName: name, object: nil, queue: .main) { (notification) in
+    print("我接收所有对象的通知", "发送至\(notification.object ?? "所有对象")")
+}
+
+center.addObserver(forName: name, object: objectA, queue: .main) { (notification) in
+    print("我只接收A的通知", "发送至\(notification.object ?? "所有对象")")
+}
+
+center.post(name: name, object: nil)
+center.post(name: name, object: objectA)
+center.post(name: name, object: objectB)
+// print: 我接收所有对象的通知 发送至所有对象
+//        我接收所有对象的通知 发送至ObjectA
+//        我只接收A的通知 发送至ObjectA
+//        我接收所有对象的通知 发送至ObjectB
 ```
 
 ## 4. 工厂模式

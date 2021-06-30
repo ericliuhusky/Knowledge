@@ -16,6 +16,7 @@ module.exports = {
       '/CS/': [
         '',
         'AsynchronyProgramming',
+        'DesignPatterns'
       ],
       '/iOS/': [
         '',
