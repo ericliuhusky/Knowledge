@@ -54,7 +54,8 @@ module.exports = {
         'SwiftToolChain',
         'Git',
         'DocC',
-        'Gitmoji'
+        'Gitmoji',
+        'UsefulWebsites'
       ]
     }
   }
