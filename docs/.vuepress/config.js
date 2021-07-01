@@ -53,7 +53,8 @@ module.exports = {
         '',
         'SwiftToolChain',
         'Git',
-        'DocC'
+        'DocC',
+        'Gitmoji'
       ]
     }
   }
