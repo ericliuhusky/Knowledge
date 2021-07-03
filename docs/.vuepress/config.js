@@ -1,6 +1,7 @@
 module.exports = {
   base: '/Knowledge/',
   title: 'EricLiu\'s Blog',
+  lang: 'zh-CN',
 
   themeConfig: {
     navbar: [
@@ -73,7 +74,8 @@ module.exports = {
             'Git.md',
             'DocC.md',
             'Gitmoji.md',
-            'UsefulWebsites.md'
+            'UsefulWebsites.md',
+            'Vuepress.md'
           ]
         }
       ]
