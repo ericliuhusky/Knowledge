@@ -3,8 +3,8 @@ module.exports = {
   title: 'EricLiu\'s Blog',
 
   themeConfig: {
-    nav: [
-      { text: 'CS', link: '/CS/'},
+    navbar: [
+      { text: 'CS', link: '/CS/' },
       { text: 'iOS', link: '/iOS/' },
       { text: 'Web', link: '/Web/' },
       { text: 'Books', link: '/Books/' },
@@ -14,48 +14,68 @@ module.exports = {
 
     sidebar: {
       '/CS/': [
-        '',
-        'AsynchronyProgramming',
-        'DesignPatterns'
+        {
+          text: '计算机科学',
+          children: [
+            'AsynchronyProgramming.md',
+            'DesignPatterns.md'
+          ]
+        }
       ],
       '/iOS/': [
-        '',
-        'Data-structure',
-        'Algorithm',
-        'Swift',
-        'String',
-        'Foundation',
-        'UIKit',
-        'WebKit',
-        'Memory-management',
-        'Network',
-        'Data-storage',
-        'Multi-thread',
-        'Design-patterns',
-        'Concurrency'
+        {
+          text: 'iOS',
+          children: [
+            'Data-structure.md',
+            'Algorithm.md',
+            'Swift.md',
+            'String.md',
+            'Foundation.md',
+            'UIKit.md',
+            'WebKit.md',
+            'Memory-management.md',
+            'Network.md',
+            'Data-storage.md',
+            'Multi-thread.md',
+            'Design-patterns.md',
+            'Concurrency.md'
+          ]
+        }
       ],
       '/Web/': [
-        '',
-        'CSS',
-        'HTML',
-        'JavaScript',
-        'React',
-        'Taro',
-        'Vue',
-        'http',
-        'Performance-optimization'
+        {
+          text: 'Web',
+          children: [
+            'CSS.md',
+            'HTML.md',
+            'JavaScript.md',
+            'React.md',
+            'Taro.md',
+            'Vue.md',
+            'http.md',
+            'Performance-optimization.md'
+          ]
+        }
       ],
       '/Books/': [
-        '',
-        'Swifter-SwiftTips'
+        {
+          text: '书籍',
+          children: [
+            'Swifter-SwiftTips.md'
+          ]
+        }
       ],
       '/Tools/': [
-        '',
-        'SwiftToolChain',
-        'Git',
-        'DocC',
-        'Gitmoji',
-        'UsefulWebsites'
+        {
+          text: '工具',
+          children: [
+            'SwiftToolChain.md',
+            'Git.md',
+            'DocC.md',
+            'Gitmoji.md',
+            'UsefulWebsites.md'
+          ]
+        }
       ]
     }
   }
