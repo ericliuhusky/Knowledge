@@ -37,35 +37,7 @@ DocC是Swift框架或包的文档编译器 (Documentation Compiler)。
 
 ### 格式化文档内容
 
-#### Markdown原生
-
-```markdown
-# 一级标题
-## 二级标题
-### 三级标题
-
-普通文本
-**粗体**
-*斜体*
-~~删除~~
-
-- 列表
-1. 序号列表
-
-[常规链接](URL)
-![图像描述](URL)
-
-`单行代码`
-\```
-代码块
-\```
-
-表头 |
---- |
-单元格 |
-
-\转义字符
-```
+#### [Markdown原生](Markdown.md)
 
 #### Documentation Markup特性
 
