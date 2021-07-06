@@ -75,7 +75,8 @@ module.exports = {
             'DocC.md',
             'Gitmoji.md',
             'UsefulWebsites.md',
-            'Vuepress.md'
+            'Vuepress.md',
+            'Markdown.md'
           ]
         }
       ]
