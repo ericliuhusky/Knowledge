@@ -97,6 +97,74 @@ yarn docs:dev
 
 ## 配置
 
+`.vuepress/congig.js`
+
+```javascript
+module.exports = {
+
+  title: '网站标题',
+  head: [['link', { rel: 'icon', href: '/images/logo.png' }]]
+
+}
+```
+
+### 导航栏
+
+```javascript
+module.exports = {
+
+  themeConfig: {
+
+    navbar: [
+      { text: '导航', link: '/目录/' },
+      { text: '下拉列表导航', children: ['文件地址', '文件地址'] }
+    ]
+
+  }
+
+}
+```
+
+### 侧边栏
+
+```javascript
+module.exports = {
+
+  themeConfig: {
+
+    sidebar: {
+      
+      '/目录/': [
+        {
+          text: '侧边栏',
+          children: ['文件地址', '文件地址']
+        },
+        {
+          text: '侧边栏',
+          children: ['文件地址', '文件地址']
+        }
+      ]
+
+    }
+
+  }
+
+}
+```
+
+### 404页面
+
+```javascript
+module.exports = {
+
+  themeConfig: {
+    notFound: ['404页面提示信息', '来到了没有知识的荒原'],
+    backToHome: '返回首页'
+  }
+
+}
+```
+
 ## 部署
 
 ### 1. 配置base
