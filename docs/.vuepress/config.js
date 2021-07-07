@@ -2,6 +2,7 @@ module.exports = {
   base: '/Knowledge/',
   title: 'EricLiu\'s Blog',
   lang: 'zh-CN',
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/images/杉.svg' }]],
 
   themeConfig: {
     navbar: [
