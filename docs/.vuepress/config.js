@@ -40,7 +40,8 @@ module.exports = {
             'Data-storage.md',
             'Multi-thread.md',
             'Design-patterns.md',
-            'Concurrency.md'
+            'Concurrency.md',
+            'Alamofire.md'
           ]
         }
       ],
