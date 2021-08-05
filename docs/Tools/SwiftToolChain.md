@@ -86,3 +86,8 @@
 
     `xcodebuild -resolvePackageDependencies -scmProvider system`
 
+## xcode
+
+1. Xcode添加本地Swift Package(必须是git仓库)
+
+    `file:///Users/<username>/Workspace/<packagename>/`
