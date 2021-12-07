@@ -7,6 +7,14 @@ module.exports = {
   themeConfig: {
     navbar: [
       { text: 'CS', link: '/CS/' },
+      {
+        text: 'Swift', children: [
+          {
+            text: 'Swift语言参考',
+            link: '/Swift/ReferenceManual/'
+          }
+        ]
+      },
       { text: 'iOS', link: '/iOS/' },
       { text: 'Web', link: '/Web/' },
       { text: 'Books', link: '/Books/' },
@@ -21,6 +29,15 @@ module.exports = {
           children: [
             'AsynchronyProgramming.md',
             'DesignPatterns.md'
+          ]
+        }
+      ],
+      '/Swift/ReferenceManual/': [
+        {
+          text: 'Swift语言参考',
+          children: [
+            'LexicalStructure.md',
+            'Attributes.md',
           ]
         }
       ],
@@ -41,7 +58,8 @@ module.exports = {
             'Multi-thread.md',
             'Design-patterns.md',
             'Concurrency.md',
-            'Alamofire.md'
+            'Alamofire.md',
+            'OC->Swift.md'
           ]
         }
       ],
