@@ -37,6 +37,7 @@ module.exports = {
           text: 'Swift语言参考',
           children: [
             'LexicalStructure.md',
+            'Types.md',
             'Attributes.md',
           ]
         }
