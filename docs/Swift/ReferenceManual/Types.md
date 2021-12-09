@@ -91,3 +91,81 @@ func makeError() throws -> Int { // 抛出异常
 
 try makeError()
 ```
+
+## 数组类型
+
+```swift
+let array: [Int] = []
+
+let array: Array<Int> = []
+
+let array = [Int]()
+```
+
+## 字典类型
+
+```swift
+let dictionary: [String: String] = [:]
+
+let dictionary: Dictionary<String, String> = [:]
+
+let dictionary = [String: String]()
+```
+
+## 可选类型
+
+```swift
+let option: Int? = nil
+
+let option: Optional<Int> = nil
+
+let option = Int?(nil)
+```
+
+## 隐式展开可选类型
+
+```swift
+let option: Int! = nil
+let unwrapped: Int = option // Fatal error: Unexpectedly found nil while implicitly unwrapping an Optional value
+```
+
+## 协议组合类型
+
+```swift
+typealias Codable = Decodable & Encodable
+```
+
+## 不透明类型
+
+不透明类型可以理解为反向范型，范型是由调用者来决定具体类型，不透明类型是由实现来决定具体类型
+
+不透明类型抛弃了协议的动态性，编译时就确定其具体类型
+
+```swift
+protocol View {
+    associatedtype Body
+    var body: Body { get }
+}
+
+struct AnyView<V>: View {
+    typealias Body = V
+    
+    let view: V
+    
+    var body: Body {
+        view
+    }
+}
+
+func draw() -> some View {
+    AnyView(view: "Hello, world!")
+}
+```
+
+## 元类型
+
+```swift
+let x: Int = 1
+
+let type: Int.Type = Int.self
+```
