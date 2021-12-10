@@ -8,7 +8,8 @@ module.exports = {
     navbar: [
       { text: 'CS', link: '/CS/' },
       {
-        text: 'Swift', children: [
+        text: 'Swift', 
+        children: [
           {
             text: 'Swift语言参考',
             link: '/Swift/ReferenceManual/'
@@ -39,6 +40,7 @@ module.exports = {
             'LexicalStructure.md',
             'Types.md',
             'Attributes.md',
+            'Expressions.md'
           ]
         }
       ],
