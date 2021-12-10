@@ -169,3 +169,53 @@ let x: Int = 1
 
 let type: Int.Type = Int.self
 ```
+
+## 任意类型
+
+```swift
+let x: Any = 1
+
+if let x = x as? Int {
+    
+}
+```
+
+## 自身类型
+
+```swift
+struct Car {
+    static func create() -> Self {
+        return Car()
+    }
+    
+    func start() {
+        Self.create()
+    }
+    
+    func run() {
+        self.start()
+        
+        let car: Self = self
+        let type: Self.Type = Self.self
+    }
+}
+```
+
+## 类型继承子句
+
+```swift
+class View: UIView, UICollectionViewDelegate, UITableViewDelegate, UITextViewDelegate {
+
+}
+
+enum Network: String {
+    case wifi = "en0"
+    case cellular = "pdp_ip0"
+}
+```
+
+## 类型推断
+
+```swift
+let x = 1
+```
