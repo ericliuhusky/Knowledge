@@ -62,7 +62,8 @@ module.exports = {
             'Design-patterns.md',
             'Concurrency.md',
             'Alamofire.md',
-            'OC->Swift.md'
+            'OC->Swift.md',
+            'ApplicationExtensionUnavailable.md'
           ]
         }
       ],
