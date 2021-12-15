@@ -103,3 +103,70 @@ let str: String = String(nsString)
 
 ["a": 1, "b": 2]
 ```
+
+### self表达式
+
+```swift
+struct SomeStruct {
+    func instanceMethod() {
+        // 在实例方法中self指代当前实例
+        self.instanceMethod()
+    }
+    
+    static func staticMethod() {
+        // 在静态方法中self指代当前类型，与Self相同
+        self.staticMethod()
+        Self.staticMethod()
+    }
+}
+```
+
+```swift
+struct SomeStruct {
+    var property: Int
+    
+    init(property: Int) {
+        self.property = property
+    }
+
+    init() {
+        self.init(property: 1)
+    }
+}
+```
+
+### super表达式
+
+```swift
+class Super {
+    init() {
+        
+    }
+}
+
+class Child: Super {
+    override init() {
+        super.init()
+    }
+}
+```
+
+### 闭包表达式
+
+```swift
+func closure(block: (Int, Int) -> Int) {
+    block(1, 2)
+}
+
+closure { (x, y) -> Int in
+    return x + y
+}
+
+closure { x, y in
+    x + y
+}
+
+closure {
+    $0 + $1
+}
+```
