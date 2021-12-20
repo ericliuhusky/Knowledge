@@ -170,3 +170,37 @@ closure {
     $0 + $1
 }
 ```
+
+#### 捕获列表
+
+```swift
+var a = 0
+var b = 0
+
+let closure = { [a] in
+    print(a, b)
+}
+
+a = 1
+b = 1
+
+closure() // 0 1
+```
+
+```swift
+class ReferenceInt {
+    var value = 0
+}
+
+let a = ReferenceInt()
+let b = ReferenceInt()
+
+let closure = { [a] in
+    print(a.value, b.value)
+}
+
+a.value = 1
+b.value = 1
+
+closure() // 1 1
+```
