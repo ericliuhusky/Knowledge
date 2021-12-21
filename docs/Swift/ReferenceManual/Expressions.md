@@ -204,3 +204,267 @@ b.value = 1
 
 closure() // 1 1
 ```
+
+```swift
+class Strong {
+    var closure: () -> Void = {}
+    
+    init() {
+        closure = { // [self] in
+            print(self.closure)
+        }
+    }
+    
+    deinit {
+        print(self)
+    }
+}
+
+class Weak {
+    var closure: () -> Void = {}
+    
+    init() {
+        closure = { [weak self] in
+            print(self?.closure)
+        }
+    }
+    
+    deinit {
+        print(self)
+    }
+}
+
+var a: Strong? = Strong()
+var b: Weak? = Weak()
+
+a = nil
+b = nil // 只有Weak被释放了
+```
+
+### 隐式成员表达式
+
+```swift
+let zero = Int.zero
+
+let zero: Int = .zero
+```
+
+### 括号表达式
+
+```swift
+extension String {
+    var firstLetterUppercased: String {
+        // 使用括号更改默认优先级的符号运算顺序
+        (first?.uppercased() ?? "") + dropFirst()
+    }
+}
+```
+
+### 元组表达式
+
+```swift
+(3, 3)
+
+(x: 3, y: 3)
+```
+
+### 通配符表达式
+
+```swift
+let (x, _) = (3, 3)
+
+
+func closure(block: (Int, Int) -> Void) -> Int {
+    1
+}
+
+_ = closure { x, _ in
+    
+}
+```
+
+### Key-Path表达式
+
+```swift
+"Hello, world!"[keyPath: \String.count]
+```
+
+```swift
+var index = 0
+let path = \[Int].[index]
+
+print([0, 1, 2][keyPath: path]) // 0
+index += 1
+print([0, 1, 2][keyPath: path]) // 0
+```
+
+```swift
+struct Task {
+    var done: Bool
+}
+
+let todoList = [
+    Task(done: true),
+    Task(done: false)
+]
+
+let doneTasks = todoList.filter(\.done)
+```
+
+### Selector表达式
+
+```swift
+class SomeClass {
+    @objc let property = 0
+    
+    @objc func method() {
+        
+    }
+}
+
+let selectorForProperty = #selector(getter: SomeClass.property)
+let selectorForMethod = #selector(SomeClass.method)
+```
+
+### Key-Path字符串表达式
+
+```swift
+class SomeClass: NSObject {
+    @objc let property = 0
+}
+
+let keyPathString = #keyPath(SomeClass.property) // "property"
+let value = SomeClass().value(forKey: keyPathString)
+```
+
+## 后缀表达式
+
+### 函数调用表达式
+
+```swift
+func someFunction(_ x: Int) {
+
+}
+
+func someFunction(x: Int) {
+
+}
+
+someFunction(0)
+someFunction(x: 1)
+```
+
+```swift
+func someFunction(completion: () -> Void) {
+
+}
+
+someFunction(completion: {
+
+})
+
+someFunction() {
+
+}
+
+someFunction {
+
+}
+```
+
+```swift
+func someFunction(x: Int, success: () -> Void, failure: () -> Void) {
+
+}
+
+someFunction(x: 1, success: {
+
+}, failure: {
+
+})
+
+someFunction(x: 1) {
+
+} failure: {
+
+}
+```
+
+#### 隐式转换为指针类型
+
+```swift
+var a = 0
+
+func implicit(pointer: UnsafePointer<Int>) {
+    
+}
+
+withUnsafePointer(to: &a) { pointer in
+    
+}
+
+implicit(pointer: &a) // inout输入输出参数隐式转换为UnsafePointer或UnsafeMutablePointer指针类型
+```
+
+### 初始化器表达式
+
+```swift
+let zero = Int()
+let zero = Int.init()
+
+let metaType = Int.self
+let zero = metaType.init()
+```
+
+```swift
+let stringArray = [0, 1, 2].map(String.init)
+let stringArray = [0, 1, 2].map { String($0) }
+```
+
+### 显示成员表达式
+
+```swift
+struct SomeStructure {
+    func someMethod(x: Int) {}
+    func someMethod(y: Int) {}
+    func overloadedMethod(x: Int) {}
+    func overloadedMethod(x: Bool) {}
+}
+
+let instance = SomeStructure()
+
+let method = instance.someMethod(x:)
+let overloadedMethod: (Int) -> Void = instance.overloadedMethod(x:)
+```
+
+### 后缀self表达式
+
+```swift
+let number: Int = 1.self
+let metaType: Int.Type = Int.self
+```
+
+### 下标表达式
+
+```swift
+var array = [0, 1, 2]
+array[0] = array[1]
+```
+
+### 强制取值表达式
+
+```swift
+var x: Int? = 0
+
+x! += 1
+
+let unwrapped = x!
+```
+
+### 可选链表达式
+
+```swift
+let string: String? = "Hello, world!"
+
+print(string?.first?.lowercased()) // Optional("h")
+```
