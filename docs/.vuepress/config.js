@@ -40,7 +40,8 @@ module.exports = {
             'LexicalStructure.md',
             'Types.md',
             'Attributes.md',
-            'Expressions.md'
+            'Expressions.md',
+            'Statements.md'
           ]
         }
       ],
