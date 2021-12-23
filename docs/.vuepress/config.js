@@ -41,7 +41,8 @@ module.exports = {
             'Types.md',
             'Attributes.md',
             'Expressions.md',
-            'Statements.md'
+            'Statements.md',
+            'Declarations.md'
           ]
         }
       ],
