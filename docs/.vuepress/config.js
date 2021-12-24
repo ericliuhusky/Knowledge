@@ -65,7 +65,8 @@ module.exports = {
             'Concurrency.md',
             'Alamofire.md',
             'OC->Swift.md',
-            'ApplicationExtensionUnavailable.md'
+            'ApplicationExtensionUnavailable.md',
+            'UnsafePointer.md'
           ]
         }
       ],
