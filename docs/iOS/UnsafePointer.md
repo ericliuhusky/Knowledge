@@ -83,6 +83,76 @@ for(int i = 0; i < 3; i++) {
 }
 ```
 
+## UnsafeRawPointer | const void *
+
+```swift
+let a = 3
+let c = "c"
+
+var p = withUnsafePointer(to: a, UnsafeRawPointer.init)
+
+print(p.assumingMemoryBound(to: Int.self).pointee)
+
+p = withUnsafePointer(to: c, UnsafeRawPointer.init)
+
+print(p.assumingMemoryBound(to: String.self).pointee)
+```
+
+```c
+const int a = 3;
+const char c = 'c';
+const void *p = &a;
+printf("%d\n", *(int*)p);
+p = &c;
+printf("%c\n", *(char*)p);
+```
+
+## UnsafeMutableRawPointer | void *
+
+```swift
+var a = 0
+var c = "0"
+
+var p = withUnsafeMutablePointer(to: &a, UnsafeMutableRawPointer.init)
+
+p.assumingMemoryBound(to: Int.self).pointee += 1
+
+print(a)
+
+p = withUnsafeMutablePointer(to: &c, UnsafeMutableRawPointer.init)
+
+p.assumingMemoryBound(to: String.self).pointee = "1"
+
+print(c)
+```
+
+```c
+int a = 0;
+char c = '0';
+void *p = &a;
+*(int*)p += 1;
+printf("%d\n", a);
+p = &c;
+*(char*)p = '1';
+printf("%c\n", c);
+```
+
+## allocate(capacity:) deallocate() | malloc() free()
+
+```swift
+let p = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+p.pointee = 3
+print(p.pointee)
+p.deallocate()
+```
+
+```c
+int *p = (int*)malloc(1);
+*p = 3;
+printf("%d\n", *p);
+free(p);
+```
+
 ## MemoryLayout | sizeof()
 
 ```swift
