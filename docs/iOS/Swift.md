@@ -407,3 +407,22 @@ extension Dictionary {
     }
 }
 ```
+
+## 21. @_dynamicReplacement
+
+```swift
+class B {
+    dynamic func a() {
+        print("a")
+    }
+}
+
+extension B {
+    @_dynamicReplacement(for:a)
+    func c() {
+        print("b")
+    }
+}
+
+B().a()
+```

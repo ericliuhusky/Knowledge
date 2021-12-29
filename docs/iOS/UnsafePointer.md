@@ -162,3 +162,64 @@ MemoryLayout<CChar>.size
 ```c
 sizeof(char)
 ```
+
+### 内存对齐
+
+```swift
+struct T {
+    var a: Int32
+    var b: CChar
+    var c: CChar
+}
+
+print(MemoryLayout<T>.size) // 4 + 1 + 1
+print(MemoryLayout<T>.alignment) // 4
+print(MemoryLayout<T>.stride) // 4 + [(1 + 1) -> 4]
+
+
+struct T {
+    var b: CChar
+    var a: Int32
+    var c: CChar
+}
+
+print(MemoryLayout<T>.size) // [1 -> 4] + 4 + 1
+print(MemoryLayout<T>.alignment) // 4
+print(MemoryLayout<T>.stride) // [1 -> 4] + 4 + [1 -> 4]
+
+
+struct T {
+    var b: CChar
+    var c: CChar
+    var a: Int32
+}
+
+print(MemoryLayout<T>.size) // [(1 + 1) -> 4] + 4
+print(MemoryLayout<T>.alignment) // 4
+print(MemoryLayout<T>.stride) // [(1 + 1) -> 4] + 4
+```
+
+```c
+struct T {
+    int a;
+    char b;
+    char c;
+};
+
+printf("%lu\n", sizeof(struct T)); // 8
+```
+
+## Unmanaged
+
+```swift
+class SomeClass {
+    
+}
+
+func printAddress<T: AnyObject>(_ object: T) {
+//    print(String(unsafeBitCast(object, to: Int.self), radix: 16, uppercase: false))
+    print(Unmanaged<T>.passUnretained(object).toOpaque())
+}
+
+printAddress(SomeClass()) // 打印对象内存地址
+```
