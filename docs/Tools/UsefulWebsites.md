@@ -3,7 +3,8 @@
 ## 计算机科学
 
 1. [算法可视化](https://visualgo.net/zh)
-
+2. [labuladong的算法小抄](https://labuladong.github.io/algo/)
+3. [LeetCode Cookbook](https://books.halfrost.com/leetcode/)
 
 ## iOS
 
@@ -22,3 +23,7 @@
 3. [Markdown思维导图](https://markmap.js.org/repl/)
 4. [http模拟数据](https://httpbin.org/)
 5. [README徽章](https://shields.io/)
+
+## 书籍
+
+1. [毛泽东选集](https://weiyinfu.cn/MaoZeDongAnthology/)

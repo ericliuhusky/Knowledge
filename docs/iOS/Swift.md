@@ -397,3 +397,13 @@ for index in 0..<referenceArray.count {
 
 dump(referenceArray)
 ```
+
+## 20. 字典key和value同时映射
+
+```swift
+extension Dictionary {
+    func mapKeysAndValues<K, V>(_ transform: ((key: Key, value: Value)) throws -> (K, V)) rethrows -> [K: V] {
+        [K: V](uniqueKeysWithValues: try map(transform))
+    }
+}
+```

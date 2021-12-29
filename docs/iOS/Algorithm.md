@@ -396,3 +396,12 @@ class LRUCache<Key: Hashable, Value>: LinkedHashList<Key, Value> {
     }
 }
 ```
+
+## Swift字符串算法特殊处理
+
+避免String为兼容utf-8而产生的繁琐下标方法，以及因此带来的性能损失
+
+```swift
+var stringArray = [Character]("abc")
+print(stringArray[0]) // a
+```
