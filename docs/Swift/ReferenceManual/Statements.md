@@ -10,6 +10,14 @@ for i in 0..<3 {
 }
 ```
 
+#### 步长不为一或倒序
+
+```swift
+for i in stride(from: 0, to: 10, by: 2) {
+    print(i) // 0 2 4 6 8
+}
+```
+
 ### While 循环
 
 ```swift
