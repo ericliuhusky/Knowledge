@@ -223,3 +223,58 @@ func printAddress<T: AnyObject>(_ object: T) {
 
 printAddress(SomeClass()) // 打印对象内存地址
 ```
+
+## 函数指针
+
+### 普通闭包
+
+```swift
+//void someMethod(void (*block)(int)) {
+//    block(1);
+//}
+
+// 与C混编时C风格闭包会自动转换为Swift风格闭包
+someMethod { x in
+    print(x)
+}
+```
+
+```c
+void someMethod(void (*block)(int)) {
+    block(1);
+}
+
+void closure(int x) {
+    printf("%d\n", x);
+}
+
+someMethod(closure);
+```
+
+### void *任意类型函数指针闭包
+
+```swift
+//void someMethod(const void *block) {
+//    printf("%p\n", block);
+//}
+//
+//void closure(int x) {
+//    printf("%d\n", x);
+//}
+
+let c_func: @convention(c) (Int32) -> Void = closure
+let c_func_ptr = unsafeBitCast(c_func, to: UnsafeRawPointer.self)
+someMethod(c_func_ptr)
+```
+
+```c
+void someMethod(const void *block) {
+    printf("%p\n", block);
+}
+
+void closure(int x) {
+    printf("%d\n", x);
+}
+
+someMethod(closure);
+```
