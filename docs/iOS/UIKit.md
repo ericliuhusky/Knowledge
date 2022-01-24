@@ -12,3 +12,43 @@
 - frame设置控件在父控件坐标系中的位置；bounds更改控件自身的坐标系
 - 默认坐标系是左上角为(0,0)，向右向下(x,y)变大，更改bounds的(x,y)可以改变坐标系左上角为(x,y)，
   子控件自然随着控件自身坐标系的更改而改动位置
+
+## UITabBarController
+
+```swift
+class TabBarController: UITabBarController, UITabBarControllerDelegate {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        viewControllers = ["1", "2", "3"].map { text in
+            ViewController(text: text)
+        }
+        
+        delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print(viewControllers?.firstIndex(of: viewController))
+    }
+}
+
+class ViewController: UIViewController {
+    init(text: String) {
+        super.init(nibName: nil, bundle: nil)
+        
+        let label = UILabel(frame: .init(x: 100, y: 100, width: 100, height: 30))
+        label.text = text
+        
+        view.addSubview(label)
+        tabBarItem = UITabBarItem(title: text, image: nil, tag: 0)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+```
