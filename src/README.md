@@ -6,4 +6,6 @@
 
 ## Products are more important than tools and programming languages
 
-## Love:two_hearts: and life are even more important
+## Love💕 and life are even more important
+
+[GitHub](https://github.com/ericliuhusky)
