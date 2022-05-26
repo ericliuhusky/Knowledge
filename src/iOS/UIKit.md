@@ -52,3 +52,26 @@ class ViewController: UIViewController {
     }
 }
 ```
+
+## 在SwiftUI中使用UIKit的App生命周期
+
+```swift
+import SwiftUI
+
+@main
+struct DemoApp: App {
+    @UIApplicationDelegateAdaptor var delegate: AppDelegate
+    
+    var body: some Scene {
+        WindowGroup {
+            DemoView()
+        }
+    }
+}
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        return true
+    }
+}
+```

@@ -426,3 +426,127 @@ extension B {
 
 B().a()
 ```
+
+## 22. 范型与协议共用时有可能会遇到丧失范型类型的情况
+
+```swift
+protocol P {
+    var a: Int { get }
+}
+
+extension P {
+    var a: Int {
+        0
+    }
+}
+
+struct T<M>: P {
+    
+}
+
+extension T where M == Int {
+    var a: Int {
+        1
+    }
+}
+
+let t: P = T<Int>()
+print(t.a) // 0 丧失类型T<Int>，变为P
+print(T<Int>().a) // 1
+```
+
+```swift
+protocol P {
+    var a: Int { get }
+}
+
+extension P {
+    var a: Int {
+        0
+    }
+}
+
+struct T: P {
+    var a: Int {
+        1
+    }
+}
+
+let t: P = T()
+print(t.a) // 1 不会丧失类型
+print(T().a) // 1
+```
+
+## 23. 切片slice是绝对索引而不是相对索引
+
+```swift
+print([0, 1, 2][1...].startIndex) // 1
+print((1..<3).startIndex) // 1
+print([0, 1, 2][1...][0]) // Fatal error: Index out of bounds
+print((1..<3)[0]) //  Fatal error: Index out of range
+```
+
+## 24. 类单例和结构体单例
+
+```swift
+class C {
+    static let shared = C()
+
+    var state = 0
+}
+
+struct T {
+    static var shared = T()
+
+    var state = 0
+}
+
+// 将shared赋值给其它变量的情况
+
+let c = C.shared
+c.state = 1
+print(C.shared.state) // 1
+
+var t = T.shared
+t.state = 1
+print(T.shared.state) // 0 没有改变
+
+// 使用类名/结构体名直接调用的情况
+
+C.shared.state = 2
+T.shared.state = 2
+print(C.shared.state) // 2
+print(T.shared.state) // 2
+```
+
+## 25. Decimal解决浮点数运算比较问题
+
+```swift
+print((0.1 + 0.2) == 0.3) // false
+print(Decimal(0.1) + Decimal(0.2) == Decimal(0.3)) // true
+print(Double(truncating: (Decimal(0.1) + Decimal(0.2)) as NSNumber)) // 0.3
+```
+
+## 26. 库前缀名调用
+
+```swift
+public struct Reactive<Base> {
+    public let base: Base
+    
+    init(_ base: Base) {
+        self.base = base
+    }
+}
+
+public protocol ReactiveCompatible {
+    associatedtype ReactiveBase
+    
+    var rx: Reactive<ReactiveBase> { get }
+}
+
+extension ReactiveCompatible {
+    public var rx: Reactive<Self> {
+        Reactive(self)
+    }
+}
+```
