@@ -17,6 +17,10 @@
 - [声明](Swift/ReferenceManual/Declarations.md)
 - [特性](Swift/ReferenceManual/Attributes.md)
 
+# Swift Evolution
+
+- [Swift5.6](Swift/Evolution/Swift5.6.md)
+
 # iOS
 
 - [数据结构](iOS/Data-structure.md)

@@ -98,3 +98,16 @@ Topics部分就是文档的层次结构了，如果不进行配置，就会使�
 在Xcode文档窗口中手动导出
 
 xcodebuild docbuild -scheme SlothCreator -derivedDataPath ~/Desktop/SlothCreatorBuild
+
+
+## Swift-DocC插件
+
+Swift 5.6+
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
+],
+```
+
+`swift package generate-documentation`
