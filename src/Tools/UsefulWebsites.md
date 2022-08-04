@@ -14,6 +14,9 @@
 4. [Swift设计模式](https://refactoringguru.cn/design-patterns/swift)
 5. [Raywenderlich-iOS书籍](https://www.raywenderlich.com/ios/books)
 6. [Google-Swift代码风格](https://google.github.io/swift/)
+7. [Apple开源](https://opensource.apple.com/)
+8. [awesome-tips](https://awesome-tips.gitbook.io/ios/)
+9. [SPM索引](https://swiftpackageindex.com/)
 
 
 ## 工具
@@ -23,6 +26,7 @@
 3. [Markdown思维导图](https://markmap.js.org/repl/)
 4. [http模拟数据](https://httpbin.org/)
 5. [README徽章](https://shields.io/)
+6. [iOS屏幕尺寸](https://www.screensizes.app/)
 
 ## 书籍
 
