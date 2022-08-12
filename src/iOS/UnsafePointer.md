@@ -93,9 +93,17 @@ var p = withUnsafePointer(to: a, UnsafeRawPointer.init)
 
 print(p.assumingMemoryBound(to: Int.self).pointee)
 
+p.withMemoryRebound(to: Int.self, capacity: 1) { p in
+    print(p.pointee)
+}
+
 p = withUnsafePointer(to: c, UnsafeRawPointer.init)
 
 print(p.assumingMemoryBound(to: String.self).pointee)
+
+p.withMemoryRebound(to: String.self, capacity: 1) { p in
+    print(p.pointee)
+}
 ```
 
 ```c
@@ -135,6 +143,25 @@ printf("%d\n", a);
 p = &c;
 *(char*)p = '1';
 printf("%c\n", c);
+```
+
+## UnsafeRawBufferPointer | char *
+
+```swift
+let a = 0x01020304
+withUnsafeBytes(of: a) { p in
+    for i in 0..<p.count {
+        print(String(p[i], radix: 16))
+    }
+}
+```
+
+```c
+const int a = 0x01020304;
+const char *p = (char *)&a;
+for (int i = 0; i < sizeof(int); i++) {
+    printf("%x\n", p[i]);
+}
 ```
 
 ## allocate(capacity:) deallocate() | malloc() free()
