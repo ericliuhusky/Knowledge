@@ -2,11 +2,15 @@
 
 [EricLiu's Blog](index.md)
 
+# 深入理解计算机系统 (CSAPP)
+
+- [信息的表示和处理](深入理解计算机系统/信息的表示和处理.md)
+- [程序的机器级表示](深入理解计算机系统/程序的机器级表示.md)
+
 # CS
 
 - [异步编程](CS/AsynchronyProgramming.md)
 - [设计模式](CS/DesignPatterns.md)
-- [计算机组成和结构](CS/计算机组成和结构.md)
 
 # Swift语言参考
 
