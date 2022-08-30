@@ -11,43 +11,67 @@ class Singleton {
 ## 2. 代理模式
 
 ```swift
-//代理模式
-
-//A的代理协议
-protocol ADelegate {
-    //回调
-    func callBack(string: String)
+protocol ADelegate: AnyObject {
+    func didTap()
 }
 
-//A类
 class A {
-    //A的代理
-    var delegate: ADelegate?
-    //执行A的函数
-    func goBack() {
-        if let delegate = delegate {
-            //代理回调
-            delegate.callBack(string: "123")
+    weak var delegate: ADelegate?
+    
+    func tap() {
+        delegate?.didTap()
+    }
+}
+
+class B: ADelegate {
+    init() {
+        let a = A()
+        a.delegate = self
+        a.tap()
+    }
+    
+    func didTap() {
+        print("tap")
+    }
+}
+
+B()
+```
+
+### 多代理
+
+```swift
+class M: ADelegate {
+    var delegates = [ADelegate]()
+    
+    init() {
+        let a = A()
+        delegates.append(C())
+        delegates.append(D())
+        a.delegate = self
+        a.tap()
+    }
+    
+    func didTap() {
+        delegates.forEach { delegate in
+            delegate.didTap()
         }
     }
 }
 
-//B类是A的代理实现
-class B: ADelegate {
-    init() {
-        let a = A()
-        //把B类对象作为a对象的代理
-        a.delegate = self
-        a.goBack()
-    }
-
-    //回调执行
-    func callBack(string: String) {
-        print(string)
+class C: ADelegate {
+    func didTap() {
+        print("tap c")
     }
 }
-//B构造执行init
-B()
+
+class D: ADelegate {
+    func didTap() {
+        print("tap d")
+    }
+}
+
+M()
 ```
 
 ## 3. 观察者模式
