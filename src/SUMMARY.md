@@ -53,17 +53,6 @@
 - [应用扩展不可用编译错误](iOS/ApplicationExtensionUnavailable.md)
 - [Swift指针](iOS/UnsafePointer.md)
 
-# Web
-
-- [CSS](Web/CSS.md)
-- [HTML](Web/HTML.md)
-- [JavaScript](Web/JavaScript.md)
-- [React](Web/JavaScript.md)
-- [Taro快速开始](Web/Taro.md)
-- [Vue](Web/Vue.md)
-- [http](Web/http.md)
-- [性能优化](Web/Performance-optimization.md)
-
 # Books
 
 - [Swifter Swift必备Tips](Books/Swifter-SwiftTips.md)
