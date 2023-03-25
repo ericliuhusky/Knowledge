@@ -65,5 +65,4 @@
 - [Gitmoji](Tools/Gitmoji.md)
 - [有用的网站](Tools/UsefulWebsites.md)
 - [mdbook](Tools/mdbook.md)
-- [Vuepress](Tools/Vuepress.md)
 - [Markdown](Tools/Markdown.md)
