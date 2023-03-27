@@ -42,7 +42,6 @@
 - [Foundation](iOS/Foundation.md)
 - [UIKit](iOS/UIKit.md)
 - [WebKit](iOS/WebKit.md)
-- [内存管理](iOS/Memory-management.md)
 - [网络](iOS/Network.md)
 - [数据存储](iOS/Data-storage.md)
 - [多线程](iOS/Multi-thread.md)
