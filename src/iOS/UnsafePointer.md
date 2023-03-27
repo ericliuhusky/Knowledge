@@ -190,52 +190,6 @@ MemoryLayout<CChar>.size
 sizeof(char)
 ```
 
-### 内存对齐
-
-```swift
-struct T {
-    var a: Int32
-    var b: CChar
-    var c: CChar
-}
-
-print(MemoryLayout<T>.size) // 4 + 1 + 1
-print(MemoryLayout<T>.alignment) // 4
-print(MemoryLayout<T>.stride) // 4 + [(1 + 1) -> 4]
-
-
-struct T {
-    var b: CChar
-    var a: Int32
-    var c: CChar
-}
-
-print(MemoryLayout<T>.size) // [1 -> 4] + 4 + 1
-print(MemoryLayout<T>.alignment) // 4
-print(MemoryLayout<T>.stride) // [1 -> 4] + 4 + [1 -> 4]
-
-
-struct T {
-    var b: CChar
-    var c: CChar
-    var a: Int32
-}
-
-print(MemoryLayout<T>.size) // [(1 + 1) -> 4] + 4
-print(MemoryLayout<T>.alignment) // 4
-print(MemoryLayout<T>.stride) // [(1 + 1) -> 4] + 4
-```
-
-```c
-struct T {
-    int a;
-    char b;
-    char c;
-};
-
-printf("%lu\n", sizeof(struct T)); // 8
-```
-
 ## Unmanaged
 
 ```swift
