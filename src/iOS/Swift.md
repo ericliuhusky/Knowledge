@@ -1,24 +1,5 @@
 # Swift
 
-## 1. copy
-
-```swift
-class A: NSCopying {
-    var a = 1
-    func copy(with zone: NSZone? = nil) -> Any {
-        let cp = A()
-        cp.a = a
-        return cp
-    }
-}
-
-let a = A()
-let cp = a.copy() as! A
-
-a.a = 2
-print(a.a, cp.a)
-```
-
 ## 2. mutating
 
 ```swift

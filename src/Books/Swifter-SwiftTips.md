@@ -337,35 +337,6 @@ let type: Type.Type = Type.self
 type.staticMethod() // 静态方法
 ```
 
-## 17. 深拷贝
-
-```swift
-protocol Copyable {
-    func copy() -> Self
-}
-
-class ReferenceInt: Copyable {
-    var value: Int
-    
-    required init(_ value: Int) {
-        self.value = value
-    }
-    
-    func copy() -> Self {
-        return type(of: self).init(value)
-    }
-
-}
-
-
-let a = ReferenceInt(0)
-let b = a.copy()
-b.value = 1
-
-print(a.value) // 0
-print(b.value) // 1
-```
-
 ## 18. 属性观察
 
 ```swift
