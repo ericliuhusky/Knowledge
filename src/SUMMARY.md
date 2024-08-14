@@ -73,3 +73,10 @@
 - [有用的网站](Tools/UsefulWebsites.md)
 - [mdbook](Tools/mdbook.md)
 - [Markdown](Tools/Markdown.md)
+
+# 行政能力测试
+
+- [言语理解](行政能力测试/言语理解.md)
+- [数量关系](行政能力测试/数量关系.md)
+- [逻辑判断](行政能力测试/逻辑判断.md)
+- [资料分析](行政能力测试/资料分析.md)
