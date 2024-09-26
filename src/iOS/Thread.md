@@ -5,7 +5,7 @@
 ### 线程
 
 ```swift
-import Foundation
+import Darwin
 
 class Thread {
     let block: () -> Void
@@ -34,7 +34,7 @@ class Thread {
 ### 锁
 
 ```swift
-import Foundation
+import Darwin
 
 class Lock {
     var mutex = pthread_mutex_t()
@@ -265,4 +265,241 @@ for _ in 0..<100 {
 
     print("no dead lock")
 }
+```
+
+## GCD
+
+### 原理模拟
+
+任务队列，线程池循环从队列里取任务执行  
+并行队列不加锁，线程池里的每个线程，都可以从队列里取任务执行，不能保证执行顺序  
+串行队列加锁，保证队列的任务执行在同一个线程上，可以保证队列内部的执行顺序
+
+```swift
+typealias Task = () -> Void
+
+class DispatchQueue {
+    var queue: [Task] = []
+    let lock = Lock()
+    
+    static let main = DispatchQueue()
+    static let _global = DispatchQueue()
+    class func global() -> DispatchQueue {
+        _global
+    }
+    
+    init(label: String = "") {
+        serialQueue.append(self)
+    }
+    
+    func async(block: @escaping Task) {
+        lock.lock()
+        queue.append(block)
+        lock.unlock()
+    }
+    
+    func sync(block: Task) {
+        block()
+    }
+    
+    func dequeue() -> Task? {
+        lock.lock()
+        defer {
+            lock.unlock()
+        }
+        return queue.isEmpty ? nil : queue.removeFirst()
+    }
+}
+
+var serialQueue = [DispatchQueue]()
+let serialLock = Lock()
+
+let threadPool = (0..<10).map { _ in
+    Thread {
+        while let task = DispatchQueue.global().dequeue() {
+            task()
+        }
+        for queue in serialQueue {
+            serialLock.lock()
+            while let task = queue.dequeue() {
+                task()
+            }
+            serialLock.unlock()
+        }
+    }
+}
+
+func dispatchMain() {
+    threadPool.forEach { thread in
+        thread.start()
+    }
+    threadPool.forEach { thread in
+        thread.join()
+    }
+    while let task = DispatchQueue.main.dequeue() {
+        task()
+    }
+}
+```
+
+原子操作flag，保证多线程条件下只执行一次  
+（单线程，只用flag就可以保证只执行一次）
+
+```swift
+import Atomics
+
+func dispatchOnce(_ done: ManagedAtomic<Bool>, block: @escaping () -> Void) {
+    if !done.compareExchange(expected: false, desired: true, ordering: .relaxed).original {
+        block()
+    }
+}
+```
+
+### 常见用法
+
+命令行程序要手动调用`dispatchMain`，UIApplication,NSApplication,RunLoop会自动调
+
+```swift
+dispatchMain()
+```
+
+主线程执行任务
+
+```swift
+DispatchQueue.main.async {
+    print("main thread")
+}
+```
+
+非主线程串行执行任务
+
+```swift
+let queue = DispatchQueue(label: "")
+queue.async {
+    for i in 0..<3 {
+        print("a \(i)")
+    }
+}
+queue.async {
+    for i in 0..<3 {
+        print("b \(i)")
+    }
+}
+queue.async {
+    for i in 0..<3 {
+        print("c \(i)")
+    }
+}
+```
+
+并行执行任务
+
+```swift
+DispatchQueue.global().async {
+    for i in 0..<3 {
+        print("a \(i)")
+    }
+}
+DispatchQueue.global().async {
+    for i in 0..<3 {
+        print("b \(i)")
+    }
+}
+DispatchQueue.global().async {
+    for i in 0..<3 {
+        print("c \(i)")
+    }
+}
+```
+
+延时执行
+
+```swift
+DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(3)) {
+    print("execute after 3 seconds")
+}
+```
+
+群组
+
+```swift
+let group = DispatchGroup()
+DispatchQueue.global().async(group: group) {
+    print(1)
+}
+DispatchQueue.global().async(group: group) {
+    print(2)
+}
+DispatchQueue.global().async(group: group) {
+    print(3)
+}
+group.notify(queue: .main) {
+    print("all done")
+}
+```
+
+信号量为1时，相当于一个互斥锁
+
+```swift
+for _ in 0..<100 {
+    var a = 0
+    let group = DispatchGroup()
+    let semaphore = DispatchSemaphore(value: 1)
+    
+    for _ in 0..<10 {
+        DispatchQueue.global().async(group: group) {
+            semaphore.wait()
+            let t = a
+            pthread_yield_np()
+            a = t + 1
+            semaphore.signal()
+        }
+    }
+    
+    group.notify(queue: .main) {
+        print(a, terminator: " ")
+    }
+}
+```
+
+## OperationQueue
+
+并行执行任务
+
+```swift
+let queue = OperationQueue()
+
+let operation1 = BlockOperation {
+    for i in 0..<3 {
+        print("a \(i)")
+    }
+}
+
+let operation2 = BlockOperation {
+    for i in 0..<3 {
+        print("b \(i)")
+    }
+}
+
+let operation3 = BlockOperation {
+    for i in 0..<3 {
+        print("c \(i)")
+    }
+}
+
+queue.addOperations([operation1, operation2, operation3], waitUntilFinished: false)
+```
+
+任务完成回调
+
+```swift
+operation2.completionBlock = {
+    print("b all done")
+}
+```
+
+任务依赖，确保任务A在任务B执行完后再执行
+
+```swift
+operation1.addDependency(operation2)
 ```

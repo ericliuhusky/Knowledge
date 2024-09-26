@@ -52,7 +52,6 @@
 - [WebKit](iOS/WebKit.md)
 - [网络](iOS/Network.md)
 - [数据存储](iOS/Data-storage.md)
-- [多线程old](iOS/Multi-thread.md)
 - [多线程](iOS/Thread.md)
 - [设计模式](iOS/Design-patterns.md)
 - [并发编程](iOS/Concurrency.md)
