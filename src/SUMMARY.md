@@ -25,7 +25,6 @@
 
 # CS
 
-- [异步编程](CS/AsynchronyProgramming.md)
 - [设计模式](CS/DesignPatterns.md)
 
 # Swift语言参考
@@ -52,9 +51,8 @@
 - [WebKit](iOS/WebKit.md)
 - [网络](iOS/Network.md)
 - [数据存储](iOS/Data-storage.md)
-- [多线程](iOS/Thread.md)
+- [并发编程](iOS/并发编程.md)
 - [设计模式](iOS/Design-patterns.md)
-- [并发编程](iOS/Concurrency.md)
 - [Alamofire](iOS/Alamofire.md)
 - [Objective-C组件库用Swift转写的方法论](iOS/OC2Swift.md)
 - [应用扩展不可用编译错误](iOS/ApplicationExtensionUnavailable.md)
