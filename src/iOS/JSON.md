@@ -57,37 +57,34 @@ decoder.keyDecodingStrategy = .custom { codingPath in
 
 遍历字典向对象发送消息
 
-```objc
-@import Foundation;
-@import ObjectiveC;
+```swift
+import Foundation
 
-@interface User : NSObject
-@property NSString *name;
-@property NSNumber *age;
-@end
-
-@implementation User
-@end
-
-int main() {
-    NSString *jsonString = @"{\"name\":\"EricLiu\",\"age\":26}";
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:nil error:nil];
-    User *user = [[User alloc] init];
-    for (NSString *key in dict.allKeys) {
-        id value = dict[key];
-        NSString *setterName = [[NSString alloc] initWithFormat:@"set%@:", [key capitalizedString]];
-        SEL setter = sel_registerName([setterName cStringUsingEncoding:NSASCIIStringEncoding]);
-        
-        ((void (*)(id, SEL, id))objc_msgSend)(user, setter, value);
-    }
-    return 0;
+@objcMembers
+class User: NSObject {
+    var name: String!
+    var age: NSNumber!
 }
+
+let jsonString = """
+{
+    "name": "EricLiu",
+    "age": 26
+}
+"""
+
+let dict = try! JSONSerialization.jsonObject(with: jsonString.data(using: .utf8)!) as! [String : Any]
+let user = User()
+for (key, value) in dict {
+    user.perform(Selector("set\(key.capitalized):"), with: value)
+}
+dump(user)
 ```
 
 ### YYModel
 
 目的是根据字典，在运行时改变对象的属性值
 
-- 不用KVC，因为每次KVC都会遍历继承链
+- 不用KVC，因为KVC太重了
 - 直接向对象属性的setter发送消息
-- YYModel只遍历继承链一次，缓存类的元信息，以应对更复杂的情况
+- YYModel缓存类的元信息，以应对更复杂的情况
