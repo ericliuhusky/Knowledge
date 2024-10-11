@@ -2,7 +2,8 @@
 
 ## 原理模拟
 
-实现观察者模式，hook setter方法，调用setter的时候通知观察者
+实现观察者模式，hook setter方法，调用setter的时候通知观察者  
+（属性需要标记为dynamic）
 
 ```swift
 class KVO: NSObject {

@@ -78,31 +78,6 @@ M()
 
 [观察者模式](../CS/DesignPatterns.md#_1-观察者模式)
 
-Key-Value Observing
-
-```swift
-import Foundation
-
-class Subject: NSObject {
-    @objc dynamic var state = 0
-}
-
-class Observer: NSObject {
-    override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
-        print(change?[.newKey] as Any)
-    }
-}
-
-let subject = Subject()
-let observer = Observer()
-subject.addObserver(observer, forKeyPath: "state", options: .new, context: nil)
-subject.state = 1
-// print: Optional(1)
-```
-
 Notification
 ```swift
 import Foundation
