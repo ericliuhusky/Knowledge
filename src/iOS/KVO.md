@@ -51,3 +51,25 @@ struct A {
     }
 }
 ```
+
+## 通知原理模拟
+
+观察者模式的变体，不存储不关心属性，仅添加观察者，向观察者发送通知
+
+```swift
+class NotificationCenter: @unchecked Sendable {
+    var observers: [String: [(String) -> Void]] = [:]
+    
+    static let `default` = NotificationCenter()
+    
+    func addObserver(forName name: String, using block: @escaping (String) -> Void) {
+        observers[name, default: []].append(block)
+    }
+    
+    func post(name: String) {
+        observers[name]?.forEach { block in
+            block(name)
+        }
+    }
+}
+```

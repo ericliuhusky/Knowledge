@@ -78,37 +78,6 @@ M()
 
 [观察者模式](../CS/DesignPatterns.md#_1-观察者模式)
 
-Notification
-```swift
-import Foundation
-
-let name = Notification.Name.init("event")
-class ObjectA {}
-class ObjectB {}
-
-let objectA = ObjectA()
-let objectB = ObjectB()
-
-// NotificationCenter实际上是观察者模式中的被观察对象
-let center = NotificationCenter.default
-
-center.addObserver(forName: name, object: nil, queue: .main) { (notification) in
-    print("我接收所有对象的通知", "发送至\(notification.object ?? "所有对象")")
-}
-
-center.addObserver(forName: name, object: objectA, queue: .main) { (notification) in
-    print("我只接收A的通知", "发送至\(notification.object ?? "所有对象")")
-}
-
-center.post(name: name, object: nil)
-center.post(name: name, object: objectA)
-center.post(name: name, object: objectB)
-// print: 我接收所有对象的通知 发送至所有对象
-//        我接收所有对象的通知 发送至ObjectA
-//        我只接收A的通知 发送至ObjectA
-//        我接收所有对象的通知 发送至ObjectB
-```
-
 ## 4. 工厂模式
 
 ```swift
